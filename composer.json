@@ -1,5 +1,5 @@
 {
-    "name": "mindy/geo-bundle",
+    "name": "mindy/geo-coder-bundle",
     "license": "MIT",
     "require": {
         "yandex/geo": "^1.1",
