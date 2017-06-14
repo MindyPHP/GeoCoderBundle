@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="mindy.geo.google.api_key">??</parameter>
+        <parameter key="mindy.geo.google.language">??</parameter>
+        <parameter key="mindy.geo.google.region">??</parameter>
+    </parameters>
+
+    <services>
+        <service id="mindy.bundle.geocoder.chain_geocoder"
+                 class="Mindy\Bundle\GeoCoderBundle\GeoCoder\Chain\ChainGeoCoder"/>
+
+        <service id="mindy.bundle.geocoder.yandex_geocoder"
+                 class="Mindy\Bundle\GeoCoderBundle\GeoCoder\Yandex\YandexGeoCoder">
+            <tag name="geocoder.geocoder"/>
+        </service>
+
+        <service id="mindy.bundle.geocoder.yandex_api"
+                 public="false"
+                 class="Yandex\Geo\Api"/>
+
+        <service id="mindy.bundle.geocoder.google_geocoder"
+                 class="Mindy\Bundle\GeoCoderBundle\GeoCoder\Google\GoogleGeoCoder">
+            <argument>%mindy.geo.google.api_key%</argument>
+            <argument>%mindy.geo.google.language%</argument>
+            <argument>%mindy.geo.google.region%</argument>
+            <tag name="geocoder.geocoder"/>
+        </service>
+
+        <service id="mindy.bundle.geocoder.example" class="Mindy\Bundle\GeoCoderBundle\Library\GeoCoderLibrary">
+            <argument type="service" id="mindy.bundle.geocoder.chain_geocoder" />
+            <tag name="template.library" />
+        </service>
+    </services>
+</container>
